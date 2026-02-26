@@ -19,15 +19,15 @@ const UploadedFileCard = ({ file, flag }) => {
         console.error("User ID not found in session storage.");
         return; 
       }
-      const response = await fetch(`http://localhost:1521/api/files/download`, {
-        method: 'GET',
-        credentials: 'include', 
-        mode: 'cors',
-        headers: {
-          'userId': userId,    
-          'fileName': filename, 
-        }
-      });
+   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/files/download`, {
+    method: 'GET',
+    credentials: 'include',
+    mode: 'cors',
+    headers: {
+        'userId': userId,      
+        'fileName': filename   
+    }
+});
   
       if (response.ok) {
         const blob = await response.blob(); 

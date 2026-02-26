@@ -1,2 +1,2 @@
-export const LOGIN_URL = 'http://localhost:1521/api/auth/login';
-export const SIGNUP_URL = 'http://localhost:1521/api/auth/signup';
+export const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/auth/login`;
+export const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/api/auth/signup`;
