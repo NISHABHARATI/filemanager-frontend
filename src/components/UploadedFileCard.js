@@ -6,7 +6,6 @@ import FileIcon from './assets/file.png';
 
 const UploadedFileCard = ({ file, flag }) => {
   if (!file) return null;
-  var fileName = file.fileName;
   const iconSrc = flag === 1 ? FileIcon : FolderIcon;
 
   const handleDownload = async (filename) => {

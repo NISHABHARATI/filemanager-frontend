@@ -40,17 +40,16 @@ const DashBoard = ({ isLogin, setIsLogin }) => {
   const closePopup = () => {
     setPopupVisible(false);
   };
- useEffect(() => {
-        const storedUserDetails = sessionStorage.getItem('userDetails');
-        const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-        const userId = userDetails ? userDetails.userId : null;
+useEffect(() => {
+    const storedUserDetails = sessionStorage.getItem('userDetails');
+    const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
 
-        if (userId) {
-            handleFetchFilesAndFolders(userId);
-        } else {
-            console.error("User not logged in, cannot fetch files and folders.");
-        }
-    }, []);
+    if (userDetails?.userId) {
+        handleFetchFilesAndFolders(userDetails.userId);
+    } else {
+        console.error("User not logged in, cannot fetch files and folders.");
+    }
+}, []);
 
 
   const handleFetchFilesAndFolders = async (parentId = -1) => {
@@ -206,17 +205,17 @@ const handleCreateFolder = async () => {
             throw new Error('User ID not found in session storage');
         }
 
-        const response = await fetch('http://localhost:1521/api/files/uploadFolder', {
-            mode: 'cors',
-            method: 'POST',
-            body: formData,
-            credentials: 'include',
-            headers: {
-                'userId': userId  
-            }
-        });
-
-        if (!response.ok) {
+      const API_URL = process.env.REACT_APP_API_URL;
+      const response = await fetch(`${API_URL}/api/files/uploadFolder`, {
+        mode: 'cors',
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+        headers: {
+          'userId': userDetails.userId
+        }
+      });
+    if (!response.ok) {
             throw new Error(`Failed to upload folder: ${response.statusText}`);
         }
 
