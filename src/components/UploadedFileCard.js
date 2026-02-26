@@ -13,7 +13,7 @@ const UploadedFileCard = ({ file, flag }) => {
     const storedUserDetails = sessionStorage.getItem('userDetails');
     const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
     const userId = userDetails?.userId;
-    const parentFolderId = file.parentFolderId ?? -1; // pass folderId if applicable
+    const parentFolderId = file.parentFolderId ?? -1;
 
     if (!userId || !file.name) {
       console.error("User ID or filename is missing");
@@ -28,7 +28,7 @@ const UploadedFileCard = ({ file, flag }) => {
       headers: {
         'userId': String(userId),
         'fileName': String(file.name),
-        'parentFolderId': String(parentFolderId)  
+        'parentFolderId': String(parentFolderId)
       }
     });
 
@@ -41,7 +41,7 @@ const UploadedFileCard = ({ file, flag }) => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = file.name; // Use DB name
+    link.download = file.name;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -58,7 +58,7 @@ const UploadedFileCard = ({ file, flag }) => {
         {file.name}
       </Typography>
       {flag === 1 && (
-        <Button variant="contained" size="small" onClick={() => handleDownload(file.name)} sx={{ marginTop: '3px', padding: '3px 8px', fontSize: '0.7rem', minWidth: '50px' }}>
+        <Button variant="contained" size="small" onClick={() => handleDownload(file)} sx={{ marginTop: '3px', padding: '3px 8px', fontSize: '0.7rem', minWidth: '50px' }}>
           Download
         </Button>
       )}

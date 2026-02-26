@@ -208,7 +208,7 @@ const DashBoard = ({ isLogin }) => {
 
       <div className="content" style={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
         {uploadedFiles.map((file, index) => (
-          <UploadedFileCard key={index} file={file} flag={file.file ? 0 : 1} />
+          <UploadedFileCard key={index} file={file} flag={file.file ? 1 : 0} />
         ))}
       </div>
 
