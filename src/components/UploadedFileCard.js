@@ -9,37 +9,45 @@ const UploadedFileCard = ({ file, flag }) => {
   const iconSrc = flag === 1 ? FileIcon : FolderIcon;
 
   const handleDownload = async (filename) => {
-    try {
-      const storedUserDetails = sessionStorage.getItem('userDetails');
-      const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-      const userId = userDetails ? Number(userDetails.userId) : null;
+  try {
+    const storedUserDetails = sessionStorage.getItem('userDetails');
+    const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
+    const userId = userDetails?.userId;
 
-      if (!userId) return console.error("User ID not found in session storage.");
-
-      const API_URL = process.env.REACT_APP_API_URL;
-      const response = await fetch(`${API_URL}/api/files/download`, {
-        method: 'GET',
-        credentials: 'include',
-        mode: 'cors',
-        headers: { userId, fileName: filename }
-      });
-
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else {
-        console.error('File download failed:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error downloading the file:', error);
+    if (!userId || !filename) {
+      console.error("User ID or filename is missing");
+      return;
     }
-  };
+
+    const API_URL = process.env.REACT_APP_API_URL;
+    const response = await fetch(`${API_URL}/api/files/download`, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'userId': String(userId),       
+        'fileName': String(filename)    
+      }
+    });
+
+    if (!response.ok) {
+      console.error('File download failed:', response.status, response.statusText);
+      return;
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  } catch (error) {
+    console.error('Error downloading the file:', error);
+  }
+};
 
   return (
     <Box sx={{ cursor: "pointer", width: '70px', textAlign: 'center', marginTop: '5px', marginBottom: '5px' }}>

@@ -104,42 +104,45 @@ const DashBoard = ({ isLogin }) => {
   };
 
   const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
+  const formData = new FormData();
+  formData.append('file', file);
 
-    try {
-      const storedUserDetails = sessionStorage.getItem('userDetails');
-      const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
-      const userId = userDetails?.userId;
-      if (!userId) throw new Error('User ID not found in session storage');
+  try {
+    const storedUserDetails = sessionStorage.getItem('userDetails');
+    const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
+    const userId = userDetails ? userDetails.userId : null;
 
-      const API_URL = process.env.REACT_APP_API_URL;
-      const response = await fetch(`${API_URL}/api/files/upload`, {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-        mode: 'cors',
-        headers: { userId }
-      });
+    if (!userId) throw new Error('User ID not found in session storage');
 
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error("Failed to upload file: " + errorMessage);
+    const parentFolderId = -1; 
+
+    const API_URL = process.env.REACT_APP_API_URL;
+    const response = await fetch(`${API_URL}/api/files/upload`, {
+      mode: 'cors',
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+      headers: {
+        'userId': userId,            
+        'parentFolderId': parentFolderId  
       }
+    });
 
-      const result = await response.json();
-      const uploadedFileName = result.fileName;
-      const isFile = result.file;
-      const uploadedFileInfo = { name: uploadedFileName, url: result.fileUrl, file: isFile };
-        setUploadedFiles(prevFiles => [...prevFiles, uploadedFileInfo]); 
-    } catch (error) {
-      console.error('Error uploading file:', error);
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error("Failed to upload file: " + errorMessage);
     }
-  };
 
+    const result = await response.json();
+    const uploadedFileInfo = { name: result.fileName, url: '', file: true };
+    setUploadedFiles(prevFiles => [...prevFiles, uploadedFileInfo]);
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+};
   const handleFolderUpload = async (event) => {
     const files = event.target.files;
     if (!files.length) return;
