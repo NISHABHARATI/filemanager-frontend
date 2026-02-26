@@ -8,13 +8,14 @@ const UploadedFileCard = ({ file, flag }) => {
   if (!file) return null;
   const iconSrc = flag === 1 ? FileIcon : FolderIcon;
 
-  const handleDownload = async (filename) => {
+  const handleDownload = async (file) => {
   try {
     const storedUserDetails = sessionStorage.getItem('userDetails');
     const userDetails = storedUserDetails ? JSON.parse(storedUserDetails) : null;
     const userId = userDetails?.userId;
+    const parentFolderId = file.parentFolderId ?? -1; // pass folderId if applicable
 
-    if (!userId || !filename) {
+    if (!userId || !file.name) {
       console.error("User ID or filename is missing");
       return;
     }
@@ -25,8 +26,9 @@ const UploadedFileCard = ({ file, flag }) => {
       credentials: 'include',
       mode: 'cors',
       headers: {
-        'userId': String(userId),       
-        'fileName': String(filename)    
+        'userId': String(userId),
+        'fileName': String(file.name),
+        'parentFolderId': String(parentFolderId)  
       }
     });
 
@@ -39,7 +41,7 @@ const UploadedFileCard = ({ file, flag }) => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = filename;
+    link.download = file.name; // Use DB name
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
