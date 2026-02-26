@@ -11,7 +11,6 @@ const DashBoard = ({ isLogin, setIsLogin }) => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [data, setData] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [userId, setUserId] = useState(null);
 
   const [isFolderPopupVisible, setFolderPopupVisible] = useState(false);
   const [folderName, setFolderName] = useState('');

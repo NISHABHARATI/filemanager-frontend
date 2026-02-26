@@ -14,7 +14,6 @@ import UserContext from "../utils/UserContext";
 export default function Header() {
   const navigate = useNavigate();
   const {loggedInUser, setIsLogin} = useContext(UserContext);
-  const {email} = useParams();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
