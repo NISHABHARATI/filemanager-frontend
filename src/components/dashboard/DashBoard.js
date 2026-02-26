@@ -131,7 +131,10 @@ const DashBoard = ({ isLogin }) => {
       }
 
       const result = await response.json();
-      setUploadedFiles(prevFiles => [...prevFiles, { name: result.fileName, url: result.fileUrl, file: result.file }]);
+      const uploadedFileName = result.fileName;
+      const isFile = result.file;
+      const uploadedFileInfo = { name: uploadedFileName, url: result.fileUrl, file: isFile };
+        setUploadedFiles(prevFiles => [...prevFiles, uploadedFileInfo]); 
     } catch (error) {
       console.error('Error uploading file:', error);
     }
