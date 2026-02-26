@@ -1,0 +1,83 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease; /* Add a fade-in effect */
+}
+
+.popup-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px; /* Limit max width */
+    width: 90%; /* Responsive width */
+    text-align: left; /* Align text to the left for form layout */
+}
+
+.popup-content h2 {
+    margin-bottom: 20px;
+    color: #333; /* Darker text color */
+    font-family: 'Arial', sans-serif; /* Font style */
+    font-size: 24px; /* Larger title font size */
+}
+
+.popup-content label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555; /* Subtle text color */
+    font-weight: bold; /* Bold labels */
+}
+
+.popup-content p {
+    margin: 10px 0;
+    color: #555; /* Subtle text color */
+    font-family: 'Arial', sans-serif; /* Font style */
+}
+
+.popup-content input {
+    width: 100%; /* Full width input */
+    padding: 10px;
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners for inputs */
+    font-size: 16px; /* Font size for inputs */
+    transition: border-color 0.3s; /* Smooth transition for focus */
+}
+
+.popup-content input:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+}
+
+.close-button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Larger font size */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.close-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
