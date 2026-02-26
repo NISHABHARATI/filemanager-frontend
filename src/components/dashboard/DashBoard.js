@@ -63,6 +63,7 @@ const DashBoard = ({ isLogin, setIsLogin }) => {
             throw new Error('User ID not found in session storage');
         }
       const parentIdValue = parentId ?? -1;
+      const API_URL = process.env.REACT_APP_API_URL;
       const response = await fetch(`${API_URL}/api/files/list?parentId=${parentIdValue}&userId=${userId}`, {
         method: 'GET',
         credentials: 'include',
@@ -108,7 +109,8 @@ const handleCreateFolder = async () => {
     
         // Replace this with the actual API endpoint for creating folders
         const parentId = 2; // Adjust as necessary; using -1 as a placeholder
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/files/create-folder?userId=${userId}&parentId=${parentId}&folderName=${encodeURIComponent(folderName)}`, {
+        const API_URL = process.env.REACT_APP_API_URL;
+        const response = await fetch(`${API_URL}/api/files/create-folder?userId=${userId}&parentId=${parentId}&folderName=${encodeURIComponent(folderName)}`, {
           method: 'POST',
           mode: 'cors',
           headers: {
@@ -150,7 +152,8 @@ const handleCreateFolder = async () => {
         if (!userId) {
             throw new Error('User ID not found in session storage');
         }
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/files/upload`, {
+        const API_URL = process.env.REACT_APP_API_URL;
+      const response = await fetch(`${API_URL}/api/files/upload`, {
         mode: 'cors',
         method: 'POST',
         body: formData,
